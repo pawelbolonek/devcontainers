@@ -1,0 +1,51 @@
+// maturity level 2
+{
+  "name": "bc-docs",
+  "dockerComposeFile": "docker-compose.yaml",
+  "service": "development",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "anthropic.claude-code",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "eamodio.gitlens",
+        "usernamehw.errorlens",
+        "ms-python.python",
+        "ms-python.vscode-python-envs",
+        "DavidAnson.vscode-markdownlint"
+      ],
+      "settings": {
+        "window.title": "BC docs",
+        "workbench.tree.indent": 20,
+        "workbench.tree.renderIndentGuides": "always",
+        "files.autoSave": "afterDelay",
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        "python.analysis.typeCheckingMode": "standard",
+        "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+        "claudeCode.allowDangerouslySkipPermissions": true,
+        "claudeCode.initialPermissionMode": "bypassPermissions",
+        "claudeCode.selectedModel": "opus",
+
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          // "bash": {
+          //   "path": "bash",
+          //   "icon": "terminal-bash"
+          // },
+          "zsh": {
+            "path": "zsh"
+          }
+        }
+      }
+    }
+  },
+  "remoteUser": "root",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose"
+}

@@ -1,0 +1,19 @@
+services:
+  development:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
+    volumes:
+      - ..:/workspace
+      # from devcontainer.json "mounts"
+      - bc-docs-history:/persistedhistory
+      # - llm-rag-claude:/persistedclaude
+    environment:
+      # from devcontainer.json "containerEnv"
+      CLAUDE_CONFIG_DIR: /workspace/.claude
+      IS_SANDBOX: "1"
+      # NODE_OPTIONS: "--max-old-space-size=4096"
+      # POWERLEVEL9K_DISABLE_GITSTATUS: "true"
+volumes:
+  bc-docs-history:
