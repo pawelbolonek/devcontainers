@@ -5,12 +5,18 @@ ARG ZSH_IN_DOCKER_VERSION=v1.2.1
 ARG ZSH_AUTOSUGGESTIONS_VERSION=v0.7.1
 ARG ZSH_FAST_SYNTAX_HIGHLIGHTING_VERSION=v1.56
 ARG ZSH_AUTOCOMPLETE=25.03.19
-ARG PYTHON_VERSION=3.14.6
-ARG UV_VERSION=0.11.28
-ARG NVM_VERION=v0.40.5
-ARG NODE_VERSION=26.5.0
-ARG CLAUDE_CODE_VERSION=2.1.205
-ARG OPEN_SPEC_VERSION=v1.6.0
+#https://www.python.org/downloads/release/python-3147/
+ARG PYTHON_VERSION=3.14.7
+#https://github.com/astral-sh/uv/releases
+ARG UV_VERSION=0.12.11
+#https://github.com/nvm-sh/nvm
+ARG NVM_VERION=v0.40.7
+#https://nodejs.org/en/about/previous-releases
+ARG NODE_VERSION=26.8.1
+#https://www.npmjs.com/package/@anthropic-ai/claude-code?activeTab=versions
+ARG CLAUDE_CODE_VERSION=2.1.266
+https://github.com/Fission-AI/OpenSpec/releases
+ARG OPEN_SPEC_VERSION=v1.13.0
 USER root
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -20,6 +26,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   iputils-ping \
   less \
   git \
+  lazygit \
+  git-delta \
   sudo \
   fzf \
   zsh \
@@ -56,7 +64,7 @@ RUN usermod --shell /usr/bin/zsh root
 RUN bash -c "$(curl --fail --show-error --silent --location https://astral.sh/uv/${UV_VERSION}/install.sh)" \
     && source $HOME/.local/bin/env
 
-RUN uv python install ${PYTHON_VERSION}
+RUN uv python install ${PYTHON_VERSION} --default
 ENV PATH="$PATH:/root/.local/bin"
 
 RUN bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/nvm-sh/nvm/${NVM_VERION}/install.sh)"  \
@@ -65,7 +73,3 @@ RUN nvm install ${NODE_VERSION}
 
 RUN npm install -g @anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}
 RUN npm install -g @fission-ai/openspec@${OPEN_SPEC_VERSION}
-#generated ond wsl2 via command: ip route show | grep -i default | awk '{ print $3}'
-#ENV WINHOST=172.21.112.1
-#bugfix for claude which does not respec env variable
-#RUN ln -s /persistedclaude /workspace/.claude
